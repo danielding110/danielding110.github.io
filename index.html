@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Ding - Research Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #1a1a1a;
+            --paper: #fdfdf8;
+            --accent: #d4461f;
+            --muted: #6b6b6b;
+            --border: #e0e0d8;
+            --shadow: rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--paper);
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60%;
+            height: 2px;
+            background: var(--accent);
+            animation: lineGrow 0.6s ease-out;
+        }
+
+        @keyframes lineGrow {
+            from { width: 0; }
+            to { width: 60%; }
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p, li {
+            font-size: 1.1rem;
+            color: var(--ink);
+        }
+
+        code, .mono {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 0;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .hero-title {
+            animation: slideUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            animation: slideUp 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            animation: slideUp 0.8s ease-out 0.6s backwards;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            animation: slideUp 0.8s ease-out 0.8s backwards;
+        }
+
+        .nav-btn {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--ink);
+            text-decoration: none;
+            padding: 0.7rem 1.4rem;
+            background: white;
+            border: 1.5px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .nav-btn:hover {
+            color: var(--paper);
+            border-color: var(--accent);
+        }
+
+        .nav-btn:hover::before {
+            left: 0;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            animation: slideUp 0.8s ease-out 1s backwards;
+        }
+
+        .contact-link {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--ink);
+            text-decoration: none;
+            padding: 0.6rem 1.2rem;
+            border: 1.5px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .contact-link:hover {
+            color: var(--paper);
+            border-color: var(--accent);
+        }
+
+        .contact-link:hover::before {
+            left: 0;
+        }
+
+        /* Sections */
+        section {
+            padding: 6rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: sectionFade 0.8s ease-out forwards;
+            animation-timeline: view();
+            animation-range: entry 0% cover 30%;
+        }
+
+        @keyframes sectionFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Education */
+        .education-item {
+            padding: 2rem;
+            background: white;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .education-item:hover {
+            transform: translateX(8px);
+            box-shadow: -8px 8px 0 var(--accent);
+        }
+
+        .edu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .edu-location {
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .courses {
+            margin-top: 1rem;
+            color: var(--muted);
+        }
+
+        /* Research & Experience */
+        .experience-item {
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+            border-left: 2px solid var(--border);
+            transition: border-color 0.3s ease;
+        }
+
+        .experience-item:hover {
+            border-left-color: var(--accent);
+        }
+
+        .exp-header {
+            margin-bottom: 1rem;
+        }
+
+        .exp-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .exp-role {
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .exp-date {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .exp-bullets {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .exp-bullets li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .exp-bullets li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Publications */
+        .publication {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, #fdfdf8 0%, #f8f8f0 100%);
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .publication:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .pub-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--ink);
+        }
+
+        .pub-title a {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .pub-title a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .pub-venue {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .pub-authors {
+            font-size: 1rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .pub-authors .me {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        /* Awards */
+        .award {
+            padding: 1.5rem 2rem;
+            background: white;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .award::before {
+            content: '★';
+            position: absolute;
+            top: 50%;
+            left: -50px;
+            transform: translateY(-50%);
+            font-size: 8rem;
+            color: var(--accent);
+            opacity: 0.05;
+        }
+
+        .award-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .award-paper {
+            font-style: italic;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .award-year {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 0 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* Decorative Elements */
+        .section-number {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .exp-title,
+            .edu-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            section {
+                padding: 4rem 0;
+            }
+
+            .experience-item {
+                padding-left: 1rem;
+            }
+
+            .nav-buttons {
+                gap: 0.8rem;
+            }
+
+            .nav-btn {
+                font-size: 0.85rem;
+                padding: 0.6rem 1rem;
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection color */
+        ::selection {
+            background: var(--accent);
+            color: var(--paper);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1 class="hero-title">Daniel Ding</h1>
+            <p class="hero-subtitle">Computer Engineering Student & AI Research Assistant</p>
+            <p class="hero-description">
+                I'm researching AI-driven software engineering and automated program repair at the University of British Columbia. 
+                My work focuses on understanding how large language models and coding agents can improve software development through 
+                better reasoning, context understanding, and multi-step coordination. I'm particularly interested in how these systems 
+                handle complex, multi-location bugs and how we can build more reliable AI tools for developers.
+            </p>
+            
+            <!-- Navigation Buttons -->
+            <nav class="nav-buttons">
+                <a href="#research" class="nav-btn">Research</a>
+                <a href="#education" class="nav-btn">Education</a>
+                <a href="#experience" class="nav-btn">Experience</a>
+                <a href="#publications" class="nav-btn">Publications</a>
+                <a href="#awards" class="nav-btn">Awards</a>
+            </nav>
+            
+            <div class="contact-links">
+                <a href="mailto:dyixuanding@gmail.com" class="contact-link">dyixuanding@gmail.com</a>
+                <a href="https://linkedin.com/in/danielyxding" target="_blank" class="contact-link">LinkedIn</a>
+                <a href="https://github.com/danielding110" target="_blank" class="contact-link">GitHub</a>
+            </div>
+        </section>
+
+        <!-- Research Experience -->
+        <section id="research">
+            <div class="section-number">01 / RESEARCH</div>
+            <h2>Research Experience</h2>
+            
+            <div class="experience-item">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>University of British Columbia</h3>
+                        <span class="exp-date">May 2024 – May 2025</span>
+                    </div>
+                    <p class="exp-role">Research Assistant - SALT Lab Led by Professor Ali Mesbah</p>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Worked with PhD Candidate Noor Nashid to develop a novel framework for automatic program bug repair by leveraging advanced Large Language Models (LLMs) to prompt and generate potential fixes for complex, multi-hunk buggy programs, as well as introducing new metrics to analyze the dispersion and complexity of multi-hunk bugs.</li>
+                    <li>Co-authored a research paper covering the methodology, findings, and potential implications of the framework, accepted into ASE 2025.</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>University of British Columbia</h3>
+                        <span class="exp-date">May 2025 – November 2025</span>
+                    </div>
+                    <p class="exp-role">Research Assistant - SALT Lab Led by Professor Ali Mesbah</p>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Worked with PhD Candidate Noor Nashid to analyze LLM-driven coding agents and their ability to repair multi-hunk level bugs. Employed fine-grained metrics to assess localization, repair accuracy, regression behavior, and operational dynamics across agents. Developed a Model Context Protocol (MCP) server to assist these coding agents with providing repository level context.</li>
+                    <li>Co-authored a research paper covering the localization ability, repair ability, and other fine-grained metrics for four LLM-driven coding agents on multi-hunk bug repair, and how our MCP server provided assistance. The work is currently under submission to TOSEM, Special Issue on Agentic AI in Software (2025).</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>University of British Columbia</h3>
+                        <span class="exp-date">November 2025 – Present</span>
+                    </div>
+                    <p class="exp-role">Research Assistant - SALT Lab Led by Professor Ali Mesbah</p>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Currently investigating the reliability characteristics of coding-agent–generated patches for multi-hunk code repair. In addition, my work focuses on fine-grained, trajectory-level analyses of coding agents to better understand and improve how these agents localize faults, reason about code changes, and take actions during complex software engineering tasks.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education">
+            <div class="section-number">02 / EDUCATION</div>
+            <h2>Education</h2>
+            <div class="education-item">
+                <div class="edu-header">
+                    <div>
+                        <h3>University of British Columbia</h3>
+                        <p class="edu-location">Vancouver, British Columbia</p>
+                    </div>
+                    <p class="exp-date">Sept 2021 – May 2026</p>
+                </div>
+                <p><strong>Bachelor of Applied Science in Computer Engineering</strong></p>
+                <p class="courses">
+                    <strong>Relevant Courses:</strong> Algorithms Design and Analysis, Machine Learning with Engineering Applications, 
+                    Relational Database, Operating Systems, Software Construction, Computer Communications
+                </p>
+            </div>
+        </section>
+
+        <!-- Technical Experience -->
+        <section id="experience">
+            <div class="section-number">03 / TECHNICAL EXPERIENCE</div>
+            <h2>Technical Work Experience</h2>
+            
+            <div class="experience-item">
+                <div class="exp-header">
+                    <div class="exp-title">
+                        <h3>Intel Corporation</h3>
+                        <span class="exp-date">May 2023 – August 2023</span>
+                    </div>
+                    <p class="exp-role">Testing Engineer Intern · Beijing, China</p>
+                </div>
+                <ul class="exp-bullets">
+                    <li>Developed self-driving program in ROS2 for robotic rover: automatic driving with speed controlled by a USB camera scanning QR codes labeled on the floor and directional changes based on distance traveled.</li>
+                    <li>Created Python program that allows a USB camera to scan QR codes and matches it with testing program for Intel's developing 3-D camera to validate the testing results.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Publications -->
+        <section id="publications">
+            <div class="section-number">04 / PUBLICATIONS</div>
+            <h2>Publications</h2>
+            
+            <div class="publication">
+                <p class="pub-venue">ASE 2025</p>
+                <p class="pub-title">
+                    <a href="https://arxiv.org/abs/2506.04418" target="_blank">
+                        Characterizing Multi-Hunk Patches: Divergence, Proximity, and LLM Repair Challenges
+                    </a>
+                </p>
+                <p class="pub-authors">
+                    Noor Nashid, <span class="me">Daniel Ding</span>, Keheliya Gallaba, Ahmed E. Hassan, Ali Mesbah
+                </p>
+            </div>
+
+            <div class="publication">
+                <p class="pub-venue">Under Submission</p>
+                <p class="pub-title">
+                    Beyond Accuracy: Behavioral Dynamics of Agentic Multi-Hunk Repair
+                </p>
+                <p class="pub-authors">
+                    Noor Nashid, <span class="me">Daniel Ding</span>, Keheliya Gallaba, Ahmed E. Hassan, Ali Mesbah
+                </p>
+            </div>
+        </section>
+
+        <!-- Awards -->
+        <section id="awards">
+            <div class="section-number">05 / AWARDS</div>
+            <h2>Awards</h2>
+            
+            <div class="award">
+                <p class="award-title">ACM SIGSOFT Distinguished Paper Award <span class="award-year">2025</span></p>
+                <p class="award-paper">Characterizing Multi-Hunk Patches: Divergence, Proximity, and LLM Repair Challenges</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Daniel Ding. Built with care.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add smooth reveal on scroll for older browsers
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add subtle parallax effect to hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+                hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.5;
+            }
+        });
+    </script>
+</body>
+</html>
